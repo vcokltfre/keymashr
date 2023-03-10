@@ -4,3 +4,7 @@ version = "1.0.0"
 edition = "2021"
 
 [dependencies]
+dotenv = "0.15.0"
+tokio = { version = "1.26.0", features = ["macros", "rt-multi-thread"] }
+twilight-gateway = "0.15.1"
+twilight-http = "0.15.1"
