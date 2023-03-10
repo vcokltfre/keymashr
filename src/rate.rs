@@ -9,7 +9,7 @@ pub fn rate(line: String) -> (i32, Vec<String>) {
             'a' | 's' | 'd' | 'f' | 'g' | 'h' | 'j' | 'k' | 'l' => score += 1,
             _ => {
                 score -= 1;
-                issues.push(format!("Bad keymash character: '{}'", c));
+                issues.push(format!("Bad keymash character: '{c}'"));
             }
         }
     }
@@ -32,7 +32,7 @@ pub fn rate(line: String) -> (i32, Vec<String>) {
         if c == last_char {
             repeats += 1;
             if c != last_repeat {
-                issues.push(format!("Repeated character: '{}'", c));
+                issues.push(format!("Repeated character: '{c}'"));
             }
             last_repeat = c;
         }
@@ -49,10 +49,10 @@ pub fn rate(line: String) -> (i32, Vec<String>) {
     // Don't question it, I don't make the rules.
     if line_len > 13 {
         negative_modifier = (line_len - 12) + 1;
-        issues.push(format!("Keymash too long: {} characters", line_len));
+        issues.push(format!("Keymash too long: {line_len} characters"));
     } else if line_len < 11 {
         negative_modifier = (12 - line_len) + 1;
-        issues.push(format!("Keymash too short: {} characters", line_len));
+        issues.push(format!("Keymash too short: {line_len} characters"));
     } else {
         negative_modifier = 0;
     }

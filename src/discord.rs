@@ -15,7 +15,7 @@ pub async fn run() -> Result<(), Box<dyn Error + Send + Sync>> {
         let event = match shard.next_event().await {
             Ok(event) => event,
             Err(why) => {
-                println!("Error: {:?}", why);
+                println!("Error: {why:?}");
                 continue;
             }
         };
@@ -25,6 +25,7 @@ pub async fn run() -> Result<(), Box<dyn Error + Send + Sync>> {
 }
 
 async fn handle(event: Event, http: Arc<HttpClient>) {
+    #[allow(clippy::single_match)]
     match event {
         Event::MessageCreate(message) => {
             let (score, _) = rate::rate(message.content.to_string());
@@ -39,7 +40,7 @@ async fn handle(event: Event, http: Arc<HttpClient>) {
                     .await;
 
                 if let Err(why) = result {
-                    println!("Error: {:?}", why);
+                    println!("Error: {why:?}");
                 }
             }
         }

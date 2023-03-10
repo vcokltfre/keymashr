@@ -13,10 +13,10 @@ fn main() {
                 .unwrap()
                 .block_on(discord::run())
             {
-                println!("Error: {:?}", why);
+                println!("Error: {why:?}");
             }
         } else {
-            println!("Unknown argument: {}", arg);
+            println!("Unknown argument: {arg}");
         }
 
         return;
@@ -32,9 +32,9 @@ fn main() {
 
         let score_percentage = ((score as f32 / 12.0) * 100.0) as i32;
 
-        println!("Keymash score: {}%", score_percentage);
+        println!("Keymash score: {score_percentage}%");
         for issue in issues {
-            println!("  - {}", issue);
+            println!("  - {issue}");
         }
         println!();
     }
