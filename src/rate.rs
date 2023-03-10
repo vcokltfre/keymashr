@@ -26,6 +26,12 @@ pub fn rate(line: String) -> (i32, Vec<String>) {
         issues.push("Varying case".to_string());
     }
 
+    let unique_chars = line.chars().collect::<std::collections::HashSet<_>>().len();
+    if unique_chars < 5 {
+        score -= min(5 - unique_chars as i32, 3);
+        issues.push("Too few unique characters".to_string());
+    }
+
     let mut repeats = 0;
     let mut last_char = ' ';
     let mut last_repeat = ' ';
