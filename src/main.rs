@@ -1,7 +1,7 @@
 use std::cmp::min;
 
 fn rate(line: String) -> (i32, Vec<String>) {
-    let mut score: i32 = 0;
+    let mut score = 0;
     let mut issues = Vec::new();
 
     for c in line.to_ascii_lowercase().chars() {
