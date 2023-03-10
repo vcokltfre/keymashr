@@ -1,4 +1,4 @@
-use std::cmp::min;
+use std::cmp::{max, min};
 
 pub const PERFECTION: i32 = 13;
 
@@ -71,5 +71,5 @@ pub fn rate(line: String) -> (i32, Vec<String>) {
         score = PERFECTION;
     }
 
-    (score, issues)
+    (max(score, 0), issues)
 }
