@@ -4,8 +4,7 @@ pub fn rate(line: String) -> (i32, Vec<String>) {
 
     for c in line.chars() {
         match c {
-            'a' | 's' | 'd' | 'f' | 'g' => score += 1,
-            'h' | 'j' | 'k' | 'l' => score += 1,
+            'a' | 's' | 'd' | 'f' | 'g' | 'h' | 'j' | 'k' | 'l' => score += 1,
             _ => {
                 score -= 1;
                 issues.push(format!("Bad keymash character: '{}'", c));

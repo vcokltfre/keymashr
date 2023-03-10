@@ -4,25 +4,24 @@ mod discord;
 mod rate;
 
 fn main() {
-    let args = std::env::args().collect::<Vec<String>>();
-    if args.len() == 2 {
-        if args[1] == "discord" {
-            println!("Running in Discord mode...");
-            dotenv().ok();
-            let future = discord::run();
-            if let Err(why) = tokio::runtime::Builder::new_multi_thread()
-                .enable_all()
-                .build()
-                .unwrap()
-                .block_on(future)
-            {
-                println!("Error: {:?}", why);
+    let arg = std::env::args().nth(1);
+    match arg {
+        Some(arg) => {
+            if arg == "discord" {
+                dotenv().ok();
+                if let Err(why) = tokio::runtime::Builder::new_multi_thread()
+                    .enable_all()
+                    .build()
+                    .unwrap()
+                    .block_on(discord::run())
+                {
+                    println!("Error: {:?}", why);
+                }
+            } else {
+                println!("Unknown argument: {}", arg);
             }
-            return;
         }
-
-        println!("Unknown argument: {}", args[1]);
-        return;
+        None => {}
     }
 
     loop {
