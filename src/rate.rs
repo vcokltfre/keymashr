@@ -1,3 +1,5 @@
+use std::cmp::min;
+
 pub fn rate(line: String) -> (i32, Vec<String>) {
     let mut score = 0;
     let mut issues = Vec::new();
