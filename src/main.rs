@@ -10,7 +10,7 @@ fn rate(line: String) -> (i32, Vec<String>) {
             'h' | 'j' | 'k' | 'l' => score += 1,
             _ => {
                 score -= 1;
-                issues.push(format!("Bad keymash character: '{}'", c));
+                issues.push(format!("Bad keymash character: '{c}'"));
             }
         }
     }
@@ -22,7 +22,7 @@ fn rate(line: String) -> (i32, Vec<String>) {
     let n_different = min(n_lower, n_upper);
     if n_different > 0 {
         score -= min(n_different as i32, 3);
-        issues.push(format!("Varying case"));
+        issues.push("Varying case".to_string());
     }
 
     let mut repeats = 0;
@@ -33,7 +33,7 @@ fn rate(line: String) -> (i32, Vec<String>) {
         if c == last_char {
             repeats += 1;
             if c != last_repeat {
-                issues.push(format!("Repeated character: '{}'", c));
+                issues.push(format!("Repeated character: '{c}'"));
             }
             last_repeat = c;
         }
@@ -50,10 +50,10 @@ fn rate(line: String) -> (i32, Vec<String>) {
     // Don't question it, I don't make the rules.
     if line_len > 13 {
         negative_modifier = line_len - 12;
-        issues.push(format!("Keymash too long: {} characters", line_len));
+        issues.push(format!("Keymash too long: {line_len} characters"));
     } else if line_len < 11 {
         negative_modifier = 12 - line_len;
-        issues.push(format!("Keymash too short: {} characters", line_len));
+        issues.push(format!("Keymash too short: {line_len} characters"));
     } else {
         negative_modifier = 0;
     }
@@ -78,9 +78,9 @@ fn main() {
 
         let score_percentage = ((score as f32 / 12.0) * 100.0) as i32;
 
-        println!("Keymash score: {}%", score_percentage);
+        println!("Keymash score: {score_percentage}%");
         for issue in issues {
-            println!("  - {}", issue);
+            println!("  - {issue}");
         }
         println!();
     }
