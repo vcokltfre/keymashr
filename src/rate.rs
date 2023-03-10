@@ -37,10 +37,10 @@ pub fn rate(line: String) -> (i32, Vec<String>) {
     // Ideal keymash length is 12 characters, a grace of 1 character is given
     // Don't question it, I don't make the rules.
     if line_len > 13 {
-        negative_modifier = line_len - 12;
+        negative_modifier = (line_len - 12) + 1;
         issues.push(format!("Keymash too long: {} characters", line_len));
     } else if line_len < 11 {
-        negative_modifier = 12 - line_len;
+        negative_modifier = (12 - line_len) + 1;
         issues.push(format!("Keymash too short: {} characters", line_len));
     } else {
         negative_modifier = 0;
