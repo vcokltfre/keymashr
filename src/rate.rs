@@ -2,7 +2,7 @@ pub fn rate(line: String) -> (i32, Vec<String>) {
     let mut score = 0;
     let mut issues = Vec::new();
 
-    for c in line.chars() {
+    for c in line.to_ascii_lowercase().chars() {
         match c {
             'a' | 's' | 'd' | 'f' | 'g' | 'h' | 'j' | 'k' | 'l' => score += 1,
             _ => {
@@ -10,6 +10,16 @@ pub fn rate(line: String) -> (i32, Vec<String>) {
                 issues.push(format!("Bad keymash character: '{}'", c));
             }
         }
+    }
+
+    // punish for varying case
+    let n_lower = line.chars().skip(1).filter(|c| c.is_lowercase()).count();
+    let n_upper = line.chars().skip(1).filter(|c| c.is_uppercase()).count();
+
+    let n_different = min(n_lower, n_upper);
+    if n_different > 0 {
+        score -= min(n_different as i32, 3);
+        issues.push("Varying case".to_string());
     }
 
     let mut repeats = 0;
