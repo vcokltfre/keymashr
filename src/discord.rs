@@ -30,7 +30,7 @@ async fn handle(event: Event, http: Arc<HttpClient>) {
         Event::MessageCreate(message) => {
             let (score, _) = rate::rate(message.content.to_string());
 
-            if score == 12 {
+            if score == rate::PERFECTION {
                 let result = http
                     .create_reaction(
                         message.channel_id,

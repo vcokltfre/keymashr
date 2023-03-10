@@ -1,5 +1,7 @@
 use std::cmp::min;
 
+pub const PERFECTION: i32 = 13;
+
 pub fn rate(line: String) -> (i32, Vec<String>) {
     let mut score = 0;
     let mut issues = Vec::new();
@@ -45,13 +47,13 @@ pub fn rate(line: String) -> (i32, Vec<String>) {
     let negative_modifier: i32;
     let line_len = line.len() as i32;
 
-    // Ideal keymash length is 12 characters, a grace of 1 character is given
+    // Ideal keymash length is 13 characters, a grace of 1 character is given
     // Don't question it, I don't make the rules.
-    if line_len > 13 {
-        negative_modifier = (line_len - 12) + 1;
+    if line_len > PERFECTION + 1 {
+        negative_modifier = (line_len - PERFECTION) + 1;
         issues.push(format!("Keymash too long: {line_len} characters"));
-    } else if line_len < 11 {
-        negative_modifier = (12 - line_len) + 1;
+    } else if line_len < PERFECTION - 1 {
+        negative_modifier = (PERFECTION - line_len) + 1;
         issues.push(format!("Keymash too short: {line_len} characters"));
     } else {
         negative_modifier = 0;
@@ -59,8 +61,8 @@ pub fn rate(line: String) -> (i32, Vec<String>) {
 
     score /= (negative_modifier / 3) + 1;
 
-    if score > 12 {
-        score = 12;
+    if score > PERFECTION {
+        score = PERFECTION;
     }
 
     (score, issues)

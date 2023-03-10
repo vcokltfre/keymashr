@@ -30,7 +30,7 @@ fn main() {
 
         let (score, issues) = rate::rate(line);
 
-        let score_percentage = ((score as f32 / 12.0) * 100.0) as i32;
+        let score_percentage = ((score as f32 / (rate::PERFECTION as f32)) * 100.0) as i32;
 
         println!("Keymash score: {score_percentage}%");
         for issue in issues {
