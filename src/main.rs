@@ -4,26 +4,22 @@ mod discord;
 mod rate;
 
 fn main() {
-    let arg = std::env::args().nth(1);
-    match arg {
-        Some(arg) => {
-            if arg == "discord" {
-                dotenv().ok();
-                if let Err(why) = tokio::runtime::Builder::new_multi_thread()
-                    .enable_all()
-                    .build()
-                    .unwrap()
-                    .block_on(discord::run())
-                {
-                    println!("Error: {:?}", why);
-                }
-            } else {
-                println!("Unknown argument: {}", arg);
+    if let Some(arg) = std::env::args().nth(1) {
+        if arg == "discord" {
+            dotenv().ok();
+            if let Err(why) = tokio::runtime::Builder::new_multi_thread()
+                .enable_all()
+                .build()
+                .unwrap()
+                .block_on(discord::run())
+            {
+                println!("Error: {:?}", why);
             }
-
-            return;
+        } else {
+            println!("Unknown argument: {}", arg);
         }
-        None => {}
+
+        return;
     }
 
     loop {
