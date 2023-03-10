@@ -1,15 +1,27 @@
+use std::cmp::min;
+
 pub fn rate(line: String) -> (i32, Vec<String>) {
     let mut score = 0;
     let mut issues = Vec::new();
 
-    for c in line.chars() {
+    for c in line.to_ascii_lowercase().chars() {
         match c {
             'a' | 's' | 'd' | 'f' | 'g' | 'h' | 'j' | 'k' | 'l' => score += 1,
             _ => {
                 score -= 1;
-                issues.push(format!("Bad keymash character: '{}'", c));
+                issues.push(format!("Bad keymash character: '{c}'"));
             }
         }
+    }
+
+    // punish for varying case
+    let n_lower = line.chars().skip(1).filter(|c| c.is_lowercase()).count();
+    let n_upper = line.chars().skip(1).filter(|c| c.is_uppercase()).count();
+
+    let n_different = min(n_lower, n_upper);
+    if n_different > 0 {
+        score -= min(n_different as i32, 3);
+        issues.push("Varying case".to_string());
     }
 
     let mut repeats = 0;
@@ -20,7 +32,7 @@ pub fn rate(line: String) -> (i32, Vec<String>) {
         if c == last_char {
             repeats += 1;
             if c != last_repeat {
-                issues.push(format!("Repeated character: '{}'", c));
+                issues.push(format!("Repeated character: '{c}'"));
             }
             last_repeat = c;
         }
@@ -37,10 +49,10 @@ pub fn rate(line: String) -> (i32, Vec<String>) {
     // Don't question it, I don't make the rules.
     if line_len > 13 {
         negative_modifier = (line_len - 12) + 1;
-        issues.push(format!("Keymash too long: {} characters", line_len));
+        issues.push(format!("Keymash too long: {line_len} characters"));
     } else if line_len < 11 {
         negative_modifier = (12 - line_len) + 1;
-        issues.push(format!("Keymash too short: {} characters", line_len));
+        issues.push(format!("Keymash too short: {line_len} characters"));
     } else {
         negative_modifier = 0;
     }
