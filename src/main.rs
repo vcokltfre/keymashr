@@ -20,6 +20,8 @@ fn main() {
             } else {
                 println!("Unknown argument: {}", arg);
             }
+
+            return;
         }
         None => {}
     }
